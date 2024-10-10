@@ -2,6 +2,7 @@ from django.core.management import BaseCommand
 import pyodbc
 from config.settings import DATABASE, USER, PASSWORD, HOST
 
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
@@ -13,7 +14,7 @@ class Command(BaseCommand):
         try:
             conn = pyodbc.connect(ConnectionString)
             conn.autocommit = True
-            conn.execute(fr"CREATE DATABASE Shelter320;")
+            conn.execute(fr"CREATE DATABASE DogKennel;")
         except pyodbc.ProgrammingError as ex:
             print(ex)
         else:
