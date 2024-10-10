@@ -1,2 +1,2 @@
 mssql-django
-python-dateutil
+python-dotenv
