@@ -131,7 +131,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
+"""django.views.static.serve()
++ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+прописывается config.urls.py"""
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = (
+    BASE_DIR / 'media',
+)
+
+"""Во время разработки вы можете обслуживать загруженные пользователем медиафайлы из MEDIA_ROOT,
+используя предоставленные django.views.static.serve().
+Например, если ваш MEDIA_URLопределен как /media/, вы можете сделать это,
+добавив следующий фрагмент к вашему ROOT_URLCONF: 
++ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)"""
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
