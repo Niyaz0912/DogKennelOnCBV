@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     # добаленные приложения
     'users',
     'dogs',
-    'bootstrap',
 
 
 ]
@@ -143,7 +142,7 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (
-    BASE_DIR / 'media',
+    BASE_DIR / 'media'
 )
 
 """Во время разработки вы можете обслуживать загруженные пользователем медиафайлы из MEDIA_ROOT,
