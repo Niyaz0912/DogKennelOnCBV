@@ -10,8 +10,8 @@ urlpatterns = [
     path('categories/', categories, name='categories'),
     path('categories/<int:pk>/dogs/', category_dogs, name='category_dogs'),
     path('dogs/', dogs_list_view, name='list_dogs'),
-    path('dogs/create', dogs_list_view, name='create_dog'),
-    path('dogs/detail/<int:pk>/', dog_detail_view, name='create_dog'),
-    path('dogs/update/<int:pk>/', dog_detail_view, name='create_dog'),
-    path('dogs/delete/<int:pk>/', dog_detail_view, name='create_dog'),
+    path('dogs/create', dog_create_view, name='create_dog'),
+    path('dogs/detail/<int:pk>/', dog_detail_view, name='detail_dog'),
+    path('dogs/update/<int:pk>/', dog_update_view, name='update_dog'),
+    path('dogs/delete/<int:pk>/', dog_delete_view, name='delete_dog'),
 ]
