@@ -13,4 +13,4 @@ register = template.Library()
 def mymedia(val):
     if val:
         return fr'/media/{val}'
-    return '/static/'
+    return '/static/INF.jpg'
