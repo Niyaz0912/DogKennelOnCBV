@@ -21,8 +21,3 @@ class User(AbstractUser):
         verbose_name = 'User'
         verbose_name_plural = 'Users'
         ordering = [id]
-
-
-from django.db import models
-
-# Create your models here.
