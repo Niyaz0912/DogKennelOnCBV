@@ -8,7 +8,7 @@ from dogs.forms import DogForm
 
 def index(request):
     context = {
-        'object_list': Category.objects.all()[:3],
+        'object_list': Category.objects.all()[:],
         'title': 'Питомник - Главная'
     }
     return render(request, 'dogs/index.html', context)
