@@ -21,4 +21,6 @@ class Command(BaseCommand):
             print(ex)
         else:
             print("База данных DogKennel успешно создана;")
+        finally:
+            conn.close()
 
