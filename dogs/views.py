@@ -37,7 +37,7 @@ def dogs_list_view(request):
         'object_list': Dog.objects.all(),
         'title': 'Питомник - Все наши собаки',
     }
-    return render(request, 'dogs/dog.html', context)
+    return render(request, 'dogs/dogs.html', context)
 
 
 def dog_create_view(request):
