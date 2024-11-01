@@ -18,7 +18,7 @@ class UserForm(StyleFormMixin, forms.ModelForm):
 
 
 class UserRegisterForm(StyleFormMixin, forms.ModelForm):
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput, min_length=6, max_length=12)
     password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput)
 
     class Meta:
