@@ -13,6 +13,7 @@
             <span class="text-muted">{{ object.owner|default:"Без хозяина" }}</span>
         </div>
         <div class="card-footer">
+            <a class="btn btn-link" href="{% url 'dogs:list_dogs' %}">назад</a>
             <a class="btn btn-link" href="{% url 'dogs:update_dog' object.pk %}">обновить</a>
             <a class="btn btn-link" href="{% url 'dogs:delete_dog' object.pk %}">удалить</a>
         </div>
