@@ -38,10 +38,6 @@ def user_login_view(request):
 @login_required
 def user_profile_view(request):
     user_object = request.user
-    if user_object.first_name:
-        user_name = user_object.first_name
-    else:
-        user_name = "Anonymous"
     context = {
         # 'user_object': user_object,
         'title': f'Ваш профиль {user_object.first_name}',
