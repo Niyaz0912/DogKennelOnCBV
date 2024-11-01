@@ -31,9 +31,13 @@
                         <li><a href="{% url 'dogs:categories' %}" class="text-white">Породы</a></li>
                         <li><a href="{% url 'dogs:list_dogs' %}" class="text-white">Собаки</a></li>
                         <li><a href="{% url 'dogs:create_dog' %}" class="text-white">Добавить собаку</a></li>
-
-                        <li><a href="{% url 'users:register_user' %}" class="text-white">Регистрация</a></li>
-
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'users:profile_user' %}" class="text-white">Профиль</a></li>
+                            <li><a href="{% url 'users:register_user' %}" class="text-white">Выход</a></li>
+                        {% else %}
+                            <li><a href="{% url 'users:login_user' %}" class="text-white">Вход</a></li>
+                            <li><a href="{% url 'users:register_user' %}" class="text-white">Регистрация</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
