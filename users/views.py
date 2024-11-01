@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -14,7 +14,7 @@ def user_register_view(request):
             new_user = form.save()
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
-            return HttpResponseRedirect(reverse('dog_index'))
+            return HttpResponseRedirect(reverse('users:login_user'))
     return render(request, 'user/register_user.html', {'form': UserRegisterForm}, )
 
 
@@ -44,3 +44,7 @@ def user_profile_view(request):
         # 'form': UserForm(instance=user_object),
     }
     return render(request, 'user/user_profile_read_only.html', context)
+
+def user_logout_view(request):
+    logout(request)
+    return redirect('dogs:index')
