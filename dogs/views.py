@@ -2,8 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from dogs.models import Category, Dog
 from dogs.forms import DogForm
+from dogs.models import Category, Dog
 
 
 def index(request):
