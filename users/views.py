@@ -61,7 +61,12 @@ def user_update_view(request):
         'title': f'Изменить профиль {user_name}',
         'form': UserUpdateForm(instance=user_object)
     }
-    return render(request, 'users/update_user.html', context)
+    return render(request, 'user/update_user.html', context)
+    # return render(request, 'user/update_user.html', {
+    #     'object': user_object,
+    #     'title': f'Изменить профиль{user_object.first_name}',
+    #     'form'; UserUpdateForm(isinstance=user_object)
+    # })
 
 
 def user_logout_view(request):
