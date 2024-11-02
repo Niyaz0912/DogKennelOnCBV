@@ -8,14 +8,17 @@ from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserFor
 
 
 def user_register_view(request):
+    form = UserRegisterForm(request.POST)
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
         if form.is_valid():
             new_user = form.save()
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
             return HttpResponseRedirect(reverse('users:login_user'))
-    return render(request, 'user/register_user.html', {'form': UserRegisterForm}, )
+    context = {
+        'form': form
+    }
+    return render(request, 'user/register_user.html', context)
 
 
 def user_login_view(request):
@@ -30,9 +33,13 @@ def user_login_view(request):
                     return HttpResponseRedirect(reverse('dogs:index'))
                 else:
                     return HttpResponse('Аккаунт неактивен!')
-    else:
-        form = UserLoginForm()
-    return render(request, 'user/login_user.html', {'form': form})
+
+    form = UserLoginForm()
+    context = {
+        'form': form
+    }
+
+    return render(request, 'user/login_user.html', context)
 
 
 @login_required
