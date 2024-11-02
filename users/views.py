@@ -27,12 +27,12 @@ def user_login_view(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(reverse('dog:index'))
+                    return HttpResponseRedirect(reverse('dogs:index'))
                 else:
                     return HttpResponse('Аккаунт неактивен!')
-        else:
-            form = UserLoginForm()
-        return render(request, 'user/login_user.html', {'form': form})
+    else:
+        form = UserLoginForm()
+    return render(request, 'user/login_user.html', {'form': form})
 
 
 @login_required

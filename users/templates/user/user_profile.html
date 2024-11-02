@@ -9,14 +9,13 @@
                     Мой профиль
                 </div>
                 <img class="card-img-top"
-                     src="{{ user.avatar|user_madia }}" width="300" height="700"
+                     src="{{ user.avatar|user_media }}" width="300" height="700"
                      alt="Card image cap">
                 <div class="card-body">
                     <form enctype="multipart/form-data">
-                        {% csrf_token %}
                         {{ form.as_p}}
                         <button class="btn btn-outline-warning">
-                            <a class="btn btn-link" href="{% url 'users:update_user' %}">обновить</a>
+                            <a class="btn btn-link" href="{% url 'users:profile_user' %}">обновить</a>
                         </button>
                     </form>
                 </div>
