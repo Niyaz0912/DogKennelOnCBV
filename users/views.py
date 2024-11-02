@@ -50,11 +50,11 @@ def user_profile_view(request):
 def user_update_view(request):
     user_object = request.user
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, request.FILES, isinstance=user_object)
+        form = UserUpdateForm(request.POST, request.FILES, instance=user_object)
         if form.is_valid():
             user_object = form.save()
             user_object.save()
-            return HttpResponseRedirect(reverse('user:profile_user'))
+            return HttpResponseRedirect(reverse('users:profile_user'))
     user_name = user_object.first_name
     context = {
         'user_object': user_object,
