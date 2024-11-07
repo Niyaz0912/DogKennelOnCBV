@@ -10,7 +10,9 @@
         <div class="card-body">
             <p class="card-text">{{ object.name|title }}</p>
             <span class="text-muted">{{ object.birth_date|default:"-" }}</span><br>
-            <span class="text-muted">{{ object.owner|default:"Без хозяина" }}</span>
+            <span class="text-muted">{{ object.owner|default:"Без хозяина" }}</span><br>
+            <span class="text-muted">{{ object.owner.first_name }}</span><br>
+            <span class="text-muted">{{ object.owner.phone }}</span><br>
         </div>
         <div class="card-footer">
             <a class="btn btn-link" href="{% url 'dogs:list_dogs' %}">назад</a>
