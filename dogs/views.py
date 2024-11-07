@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
-from dogs.forms import DogForm
 from dogs.models import Category, Dog
+from dogs.forms import DogForm
 
 
 def index(request):
@@ -14,12 +15,13 @@ def index(request):
     :return: Rendered HTML-страница с списком пород.
     """
     context = {
-        'object_list': Category.objects.all()[:],
+        'object_list': Category.objects.all()[:3],
         'title': 'Питомник - Главная'
     }
     return render(request, 'dogs/index.html', context)
 
 
+@login_required
 def categories(request):
     """
     View для отображения всех категорий собак в питомнике.
@@ -34,6 +36,7 @@ def categories(request):
     return render(request, 'dogs/categories.html', context)
 
 
+@login_required
 def category_dogs(request, pk):
     """
     View для отображения списка собак конкретной породы.
@@ -51,6 +54,7 @@ def category_dogs(request, pk):
     return render(request, 'dogs/dogs.html', context)
 
 
+@login_required
 def dogs_list_view(request):
     """
     View для отображения списка всех собак в питомнике.
@@ -65,6 +69,7 @@ def dogs_list_view(request):
     return render(request, 'dogs/dogs.html', context)
 
 
+@login_required
 def dog_create_view(request):
     """
     View для создания новой собаки в питомнике.
@@ -75,11 +80,18 @@ def dog_create_view(request):
     if request.method == 'POST':
         form = DogForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            dog_object = form.save()
+            dog_object.owner = request.user
+            dog_object.save()
             return HttpResponseRedirect(reverse('dogs:list_dogs'))
-    return render(request, 'dogs/create_update.html', {'form': DogForm()})
+    context = {
+        'title': 'Добавление питомца',
+        'form': DogForm(),
+    }
+    return render(request, 'dogs/create_update.html', context)
 
 
+@login_required
 def dog_detail_view(request, pk):
     """
     View для отображения детальной информации о конкретной собаке.
@@ -95,6 +107,7 @@ def dog_detail_view(request, pk):
     return render(request, 'dogs/detail.html', context)
 
 
+@login_required
 def dog_update_view(request, pk):
     """
     View для обновления информации о конкретной собаке.
@@ -110,13 +123,15 @@ def dog_update_view(request, pk):
         if form.is_valid():
             dog_object = form.save()
             dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:detail_dog', args=[pk]))
-    return render(request, 'dogs/update.html', {
+            return HttpResponseRedirect(reverse('dogs:detail_dog', args={pk: pk}))
+    context = {
         'object': dog_object,
         'form': DogForm(instance=dog_object)
-    })
+    }
+    return render(request, 'dogs/create_update.html', context)
 
 
+@login_required
 def dog_delete_view(request, pk):
     """
     View для удаления конкретной собаки из питомника.
