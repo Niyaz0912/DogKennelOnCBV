@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 from users.models import NULLABLE
 
@@ -22,6 +23,9 @@ class Dog(models.Model):
     photo = models.ImageField(upload_to='dogs/', **NULLABLE, verbose_name='image')
     birth_date = models.DateField(**NULLABLE, verbose_name='birth_date')
 
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                              verbose_name="владелец")
+
     def __str__(self):
         return f'{self.name} ({self.category})'
 
@@ -35,4 +39,3 @@ class Dog(models.Model):
         # permissions = []  # добавляются группы пользователей, которые могут изменять сущность данной модели
         # db_table = 'doggies'  # перезаписать имя таблицы в БД
         # get_latest_by = 'birth_date'  # возвращает последний объект по порядку возрастания (самая молодая собака)
-
