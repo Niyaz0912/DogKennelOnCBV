@@ -22,7 +22,10 @@ def user_register_view(request):
             new_user = form.save()
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
-            send_register_email(new_user.email)
+            try:
+                send_register_email(new_user.email)
+            except Exception:
+                print('Не удалось отправить письмо!')
             return HttpResponseRedirect(reverse('users:login_user'))
     context = {
         'form': form
