@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 
 from dogs.models import Category, Dog
@@ -54,19 +55,12 @@ def category_dogs(request, pk):
     return render(request, 'dogs/dogs.html', context)
 
 
-@login_required
-def dogs_list_view(request):
-    """
-    View для отображения списка всех собак в питомнике.
-
-    :param request: Объект запроса HTTP.
-    :return: Rendered HTML-страница с списком всех собак.
-    """
-    context = {
-        'object_list': Dog.objects.all(),
+class DogListView(ListView):
+    model = Dog
+    extra_context = {
         'title': 'Питомник - Все наши собаки',
     }
-    return render(request, 'dogs/dogs.html', context)
+    template_name = 'dogs/dogs.html'
 
 
 @login_required
