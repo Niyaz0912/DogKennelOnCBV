@@ -95,5 +95,4 @@ def user_generate_new_password(request):
 
 
 class UserLogoutView(LogoutView):
-    template_name = 'user/logout.html'
-    pass
+    template_name = 'user/logout_user.html'
