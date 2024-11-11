@@ -70,6 +70,10 @@ class DogCreateView(CreateView):
     success_url = reverse_lazy('dogs:list_dogs')
 
 
+class DogDetailView(DetailView):
+    model = Dog
+    template_name = 'dogs/detail.html'
+
 @login_required
 def dog_detail_view(request, pk):
     """
