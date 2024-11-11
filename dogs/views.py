@@ -74,44 +74,14 @@ class DogDetailView(DetailView):
     model = Dog
     template_name = 'dogs/detail.html'
 
-@login_required
-def dog_detail_view(request, pk):
-    """
-    View для отображения детальной информации о конкретной собаке.
 
-    :param request: Объект запроса HTTP.
-    :param pk: Primary key собаки.
-    :return: Rendered HTML-страница с детальной информацией о собаке.
-    """
-    context = {
-        'object': Dog.objects.get(pk=pk),
-        'title': 'Вы выбрали данного питомца'
-    }
-    return render(request, 'dogs/detail.html', context)
+class DogUpdateView(UpdateView):
+    model = Dog
+    form_class = DogForm
+    template_name = 'dogs/create_update.html'
 
-
-@login_required
-def dog_update_view(request, pk):
-    """
-    View для обновления информации о конкретной собаке.
-
-    :param request: Объект запроса HTTP.
-    :param pk: Primary key собаки.
-    :return: Rendered HTML-страница для обновления информации о собаке или перенаправление на детальную страницу собаки
-    после успешного обновления.
-    """
-    dog_object = get_object_or_404(Dog, pk=pk)
-    if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES, instance=dog_object)
-        if form.is_valid():
-            dog_object = form.save()
-            dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:detail_dog', args={pk: pk}))
-    context = {
-        'object': dog_object,
-        'form': DogForm(instance=dog_object)
-    }
-    return render(request, 'dogs/create_update.html', context)
+    def get_success_url(self):
+        return reverse('dogs:detail_dog', args=[self.kwargs.get('pk')])
 
 
 @login_required
