@@ -82,9 +82,7 @@ def user_update_view(request):
     return render(request, 'user/update_user.html', context)
 
 
-def user_logout_view(request):
-    logout(request)
-    return redirect('dogs:index')
+
 
 
 @login_required
@@ -94,3 +92,8 @@ def user_generate_new_password(request):
     request.user.save()
     send_new_password(request.user.email, new_password)
     return redirect(reverse('dogs:index'))
+
+
+class UserLogoutView(LogoutView):
+    template_name = 'user/logout.html'
+    pass
