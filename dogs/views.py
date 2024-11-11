@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
@@ -84,19 +83,8 @@ class DogUpdateView(UpdateView):
         return reverse('dogs:detail_dog', args=[self.kwargs.get('pk')])
 
 
-@login_required
-def dog_delete_view(request, pk):
-    """
-    View для удаления конкретной собаки из питомника.
+class DogDeleteView(DeleteView):
+    model = Dog
+    template_name = 'dogs/delete.html'
+    success_url = reverse_lazy('dogs:list_dogs')
 
-    :param request: Объект запроса HTTP.
-    :param pk: Primary key собаки.
-    :return: Rendered HTML-страница для подтверждения удаления или перенаправление на список собак после успешного удаления.
-    """
-    dog_object = get_object_or_404(Dog, pk=pk)
-    if request.method == 'POST':
-        dog_object.delete()
-        return HttpResponseRedirect(reverse('dogs:list_dogs'))
-    return render(request, 'dogs/delete.html', {
-        'object': dog_object,
-    })
