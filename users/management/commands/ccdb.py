@@ -9,18 +9,18 @@ class Command(BaseCommand):
         global conn
         ConnectionString = f'''DRIVER={{ODBC Driver 17 for SQL Server}};
                                         SERVER={HOST};
-                                        DATABASE="Dog kennel"
-                                        DATABASE={DATABASE};
+                                        DATABASE=master;
                                         UID={USER};
                                         PWD={PASSWORD}'''
         try:
             conn = pyodbc.connect(ConnectionString)
-            conn.autocommit = True
-            conn.execute(fr"CREATE DATABASE {DATABASE};")
         except pyodbc.ProgrammingError as ex:
             print(ex)
         else:
-            print("База данных DogKennel успешно создана;")
-        finally:
-            conn.close()
-
+            conn.autocommit = True
+            try:
+                conn.execute(fr"CREATE DATABASE {DATABASE};")
+            except pyodbc.ProgrammingError as ex:
+                print(ex)
+            else:
+                print(f"База данных {DATABASE} успешно создана;")
