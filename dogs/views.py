@@ -11,12 +11,6 @@ from dogs.forms import DogForm, ParentForm
 
 
 def index(request):
-    """
-    View для отображения главной страницы питомника.
-
-    :param request: Объект запроса HTTP.
-    :return: Rendered HTML-страница с списком пород.
-    """
     context = {
         'object_list': Category.objects.all()[:3],
         'title': 'Питомник - Главная'
@@ -24,30 +18,16 @@ def index(request):
     return render(request, 'dogs/index.html', context)
 
 
-@login_required
-def categories(request):
-    """
-    View для отображения всех категорий собак в питомнике.
-
-    :param request: Объект запроса HTTP.
-    :return: Rendered HTML-страница с списком всех пород.
-    """
-    context = {
-        'object_list': Category.objects.all(),
-        'title': 'Питомник - Все наши породы'
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    extra_context = {
+        'title': 'Питомник все наши породы'
     }
-    return render(request, 'dogs/categories.html', context)
+    template_name = 'dogs/categories.html'
 
 
 @login_required
 def category_dogs(request, pk):
-    """
-    View для отображения списка собак конкретной породы.
-
-    :param request: Объект запроса HTTP.
-    :param pk: Primary key категории.
-    :return: Rendered HTML-страница с списком собак данной породы.
-    """
     category_item = Category.objects.get(pk=pk)
     context = {
         'object_list': Dog.objects.filter(category_id=pk),
