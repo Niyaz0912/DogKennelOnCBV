@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 
 from dogs.models import Category, Dog, Parent
 from dogs.forms import DogForm, ParentForm
+from dogs.services import send_views_mail
 from users.models import UserRoles
 
 
@@ -84,9 +85,23 @@ class DogCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class DogDetailView(DetailView):
+class DogDetailView(LoginRequiredMixin, DetailView):
     model = Dog
     template_name = 'dogs/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        object = self.get_object()
+        context_data['title'] = f'{object.name} {object.category}'
+        dog_object_increase = get_object_or_404(Dog, pk=object.pk)
+        # if object.owner != self.request.user and self.request.user.role not in [UserRoles.ADMIN, UserRoles.MODERATOR]:
+        if object.owner != self.request.user:
+            dog_object_increase.views_count()
+        if object.owner:
+            object_owner_email = object.owner.email
+            if dog_object_increase.views % 20 == 0 and dog_object_increase.views != 0:
+                send_views_mail(dog_object_increase.name, object_owner_email, dog_object_increase.views)
+        return context_data
 
 
 class DogUpdateView(LoginRequiredMixin, UpdateView):
