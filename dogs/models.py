@@ -26,6 +26,8 @@ class Dog(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
                               verbose_name="владелец")
+    views = models.IntegerField(default=0, verbose_name='просмотры')
+
 
     def __str__(self):
         return f'{self.name} ({self.category})'
@@ -40,6 +42,10 @@ class Dog(models.Model):
         # permissions = []  # добавляются группы пользователей, которые могут изменять сущность данной модели
         # db_table = 'doggies'  # перезаписать имя таблицы в БД
         # get_latest_by = 'birth_date'  # возвращает последний объект по порядку возрастания (самая молодая собака)
+
+    def views_count(self):
+        self.views += 1
+        self.save()
 
 
 class Parent(models.Model):
