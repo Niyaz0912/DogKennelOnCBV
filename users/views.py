@@ -1,8 +1,9 @@
 import random
 import string
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from django.shortcuts import reverse, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -24,8 +25,10 @@ def form_valid(self, form):
     send_register_email(self.object.email)
     return super().form_valid(form)
 
+
 class UserLoginView(LoginView):
     template_name = 'user/login_user.html'
+    form_class = UserLoginForm
 
 
 class UserProfileView(UpdateView):
@@ -55,6 +58,25 @@ class UserPasswordChangeView(PasswordChangeView):
 
 class UserLogoutView(LogoutView):
     template_name = 'user/logout_user.html'
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    extra_context = {
+        'title': 'Питомник все наши заводчики'
+    }
+    template_name = 'user/users.html'
+
+
+def get_queryset(self):
+    queryset = super().get_queryset()
+    queryset = queryset.filter(is_active=True)
+    return queryset
+
+
+class UserViewProfileView(DetailView):
+    model = User
+    template_name = 'user/user_view_profile.html'
 
 
 @login_required
