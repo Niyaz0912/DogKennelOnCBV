@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # добаленные приложения
     'users',
     'dogs',
+    'reviews'
 
 ]
 
