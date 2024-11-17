@@ -1,11 +1,11 @@
 from django.urls import path
 
 from reviews.apps import ReviewsConfig
-from reviews.views import DogReviewListView, DeactivatedDogReviewListView
+from reviews.views import ReviewListView, ReviewDeactivatedListView
 
 app_name = ReviewsConfig.name
 
 urlpatterns = [
-    path('<int:pk>/reviews/', DogReviewListView.as_view, name='reviews_list'),
-    path('<int:pk>/reviews/deactivate/', DeactivatedDogReviewListView.as_view(), name='deactivated_reviews_list_dogs'),
+    path('', ReviewListView.as_view(), name='list_reviews'),
+    path('deactivated/', ReviewDeactivatedListView.as_view(), name='deactivated_reviews'),
     ]
