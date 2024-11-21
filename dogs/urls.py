@@ -16,5 +16,5 @@ urlpatterns = [
     path('dogs/detail/<int:pk>/', DogDetailView.as_view(), name='detail_dog'),
     path('dogs/toggle/<int:pk>', dog_toggle_activity, name='toggle_activity_dog'),
     path('dogs/update/<int:pk>/', never_cache(DogUpdateView.as_view()), name='update_dog'),
-    path('dogs/deete/<int:pk>', DogDeleteView.as_view(), name='delete_dog'),
+    path('dogs/delete/<int:pk>', DogDeleteView.as_view(), name='delete_dog'),
     ]
