@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -69,6 +70,16 @@ class DogDeactivateListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(is_active=False, owner=self.request.user)
         return queryset
 
+
+class DogSearchListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/dogs_search_results.html'
+    queryset = Dog.objects.filter(name__icontains='Пушок')
+
+    def get_queryset(self):
+        return Dog.objects.filter(
+            Q(name__icontains='Пушок')
+        )
 
 class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog
@@ -166,3 +177,4 @@ def dog_toggle_activity(request, pk):
         dog_item.is_active = True
     dog_item.save()
     return redirect(reverse('dogs:list_dogs'))
+
