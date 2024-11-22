@@ -21,6 +21,21 @@ def index(request):
     return render(request, 'dogs/index.html', context)
 
 
+class CategorySearchListView(LoginRequiredMixin, ListView):
+    model = Category
+    template_name = 'dogs/categories.html'
+    extra_context = {
+        'title': 'Результаты поискового запроса'
+    }
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Category.objects.filter(
+            Q(name__icontains=query),
+        )
+        return object_list
+
+
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     extra_context = {
