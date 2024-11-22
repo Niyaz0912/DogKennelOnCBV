@@ -14,8 +14,8 @@
                     <td>Текст отзыва</td>
                     {{ object.content }}
                 </p>
-                <span class="text-muted"><td>Дата создания</td>{{ object.created }}</span><br>
-                <span class="text-muted"><td>Автор</td>{{ object.autor|default:"Аноним" }}</span><br>
+                <span class="text-muted"><td>Дата создания: </td>{{ object.created }}</span><br>
+                <span class="text-muted"><td>Автор: </td>{{ object.autor|default:"Аноним" }}</span><br>
             </div>
             <div class="card-footer">
                 <a href="{% url 'reviews:list_reviews' %}" class="btn btn-outline-primary"><< Назад</a>
