@@ -31,7 +31,7 @@ class UserLoginView(LoginView):
     form_class = UserLoginForm
 
 
-class UserProfileView(UpdateView):
+class UserProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserForm
     template_name = 'user/user_profile_read_only.html'
@@ -40,7 +40,7 @@ class UserProfileView(UpdateView):
         return self.request.user
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'user/update_user.html'
@@ -50,7 +50,7 @@ class UserUpdateView(UpdateView):
         return self.request.user
 
 
-class UserPasswordChangeView(PasswordChangeView):
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = UserPasswordChangeForm
     template_name = 'user/change_password_user.html'
     success_url = reverse_lazy('users:profile_user')
