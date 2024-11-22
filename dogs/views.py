@@ -41,6 +41,7 @@ def category_dogs(request, pk):
 
 class DogListView(LoginRequiredMixin, ListView):
     model = Dog
+    paginate_by = 3
     extra_context = {
         'title': 'Питомник - Все наши собаки',
     }
