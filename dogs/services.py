@@ -3,7 +3,6 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 
 from dogs.models import Category
-from dogs.models import Dog
 
 
 def get_categories_cache():

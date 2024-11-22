@@ -28,7 +28,6 @@ class Dog(models.Model):
                               verbose_name="владелец")
     views = models.IntegerField(default=0, verbose_name='просмотры')
 
-
     def __str__(self):
         return f'{self.name} ({self.category})'
 
@@ -60,7 +59,3 @@ class Parent(models.Model):
     class Meta:
         verbose_name = 'parent'
         verbose_name_plural = 'parents'
-
-
-
-
