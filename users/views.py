@@ -67,11 +67,10 @@ class UserListView(LoginRequiredMixin, ListView):
     }
     template_name = 'user/users.html'
 
-
-def get_queryset(self):
-    queryset = super().get_queryset()
-    queryset = queryset.filter(is_active=True)
-    return queryset
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_active=True)
+        return queryset
 
 
 class UserViewProfileView(DetailView):
